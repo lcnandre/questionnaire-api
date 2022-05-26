@@ -1,5 +1,5 @@
 import { Entity, Property } from '@mikro-orm/core';
-import { IsEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 import { Answer } from '../answer';
 import { ShortAnswerQuestion } from '../questions/short-answer-question';
@@ -9,7 +9,7 @@ import { User } from '../user';
 @Entity({ discriminatorValue: QuestionType.ShortAnswer })
 export class ShortAnswer extends Answer {
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   @Property()
   text: string;
 

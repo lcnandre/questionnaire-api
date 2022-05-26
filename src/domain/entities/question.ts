@@ -1,5 +1,5 @@
 import { Entity, Enum, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { IsDefined, IsEmpty, IsOptional } from 'class-validator';
+import { IsDefined, IsNotEmpty, IsOptional } from 'class-validator';
 import { QuestionType } from '../enums/question-type';
 import { Answer } from './answer';
 
@@ -17,7 +17,7 @@ export abstract class Question {
   @Property()
   order: number;
 
-  @IsEmpty()
+  @IsNotEmpty()
   @Property()
   title: string;
 

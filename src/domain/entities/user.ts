@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
-import { IsDefined, IsEmail, IsEmpty, IsString, MinLength } from 'class-validator';
+import { IsDefined, IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 
 const PASSWORD_SALT_ROUDS = 10;
@@ -11,7 +11,7 @@ export class User {
 
   @IsDefined()
   @IsString()
-  @IsEmpty()
+  @IsNotEmpty()
   @Property()
   name: string;
 
@@ -31,7 +31,7 @@ export class User {
     this.password = bcrypt.hashSync(password, PASSWORD_SALT_ROUDS);
   }
 
-  validatePassword(password: string) {
+  validatePassword(password: string): boolean {
     return bcrypt.compareSync(password, this.password);
   }
 }

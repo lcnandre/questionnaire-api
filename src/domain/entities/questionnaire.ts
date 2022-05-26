@@ -1,5 +1,5 @@
 import { Entity, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { ArrayNotEmpty, IsArray, IsDefined, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsDefined, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
 import shortid from 'shortid';
 
 import { Question } from './question';
@@ -14,7 +14,7 @@ export class Questionnaire {
   @ManyToOne()
   creator: User;
 
-  @IsEmpty()
+  @IsNotEmpty()
   @Property()
   title: string;
 
@@ -29,8 +29,10 @@ export class Questionnaire {
   @OneToMany(() => Question, question => question.questionnaire)
   questions: Question[];
 
-  constructor(creator: User) {
+  constructor(creator: User, title: string, questions: Question[]) {
     this.creator = creator;
-    this.shareUrl = `${creator.id}/${shortid.generate()}`;
+    this.title = title;
+    this.questions = questions;
+    this.shareUrl = `${creator?.id}/${shortid.generate()}`;
   }
 }
