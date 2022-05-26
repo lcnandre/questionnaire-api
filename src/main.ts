@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { NestFactory } from '@nestjs/core';
 import { HttpStatus } from '@nestjs/common';
 import { json, urlencoded } from 'express';
