@@ -13,8 +13,8 @@ const config: MikroOrmModuleOptions = {
   driverOptions: {
     connection: { ssl: { rejectUnauthorized: false } },
   },
-  entities: ['./dist/domain/entities/**/*.js'],
-  entitiesTs: ['./src/domain/entities/**/*.ts'],
+  entities: ['./dist/domain/entities/**/!(*.spec).js'],
+  entitiesTs: ['./src/domain/entities/**/!(*.spec).ts'],
   debug: process.env.NODE_ENV !== 'production',
   loadStrategy: LoadStrategy.JOINED,
   highlighter: new SqlHighlighter(),
@@ -24,6 +24,11 @@ const config: MikroOrmModuleOptions = {
     path: './dist/application/migrations',
     pathTs: './src/application/migrations',
   },
+  seeder: {
+    path: './dist/application/seeders',
+    pathTs: './src/application/seeders',
+    glob: '!(*.spec).{js,ts}'
+  }
 };
 
 export default config;
