@@ -26,7 +26,7 @@ export class Questionnaire {
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested()
-  @OneToMany(() => Question, question => question.questionnaire)
+  @OneToMany(/* istanbul ignore next */ () => Question, /* istanbul ignore next */ question => question.questionnaire)
   questions: Question[];
 
   constructor(creator: User, title: string, questions: Question[]) {

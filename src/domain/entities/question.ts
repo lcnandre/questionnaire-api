@@ -26,10 +26,10 @@ export abstract class Question {
   questionnaire: Questionnaire;
 
   @IsOptional()
-  @OneToMany(() => Answer, answer => answer.question)
+  @OneToMany(/* istanbul ignore next */ () => Answer, /* istanbul ignore next */ answer => answer.question)
   answers?: Answer[] = [];
 
-  @Enum(() => QuestionType)
+  @Enum(/* istanbul ignore next */ () => QuestionType)
   type!: QuestionType;
 
   constructor(order: number, title: string) {

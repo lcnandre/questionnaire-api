@@ -21,7 +21,7 @@ export abstract class Answer {
   @ManyToOne()
   question: Question;
 
-  @Enum(() => QuestionType)
+  @Enum(/* istanbul ignore next */ () => QuestionType)
   type!: QuestionType;
 
   constructor(user: User, question: Question) {

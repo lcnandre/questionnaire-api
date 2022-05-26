@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
