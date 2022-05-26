@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { LoadStrategy } from '@mikro-orm/core';
 import { MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';

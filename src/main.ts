@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { NestFactory } from '@nestjs/core';
 import { HttpStatus } from '@nestjs/common';
-import { json, urlencoded } from 'express';
+import { json } from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 
