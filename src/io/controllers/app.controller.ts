@@ -1,12 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from '../../application/services/app.service';
+import { Controller, Get, HttpStatus, Redirect } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Redirect('/graphql', HttpStatus.FOUND)
+  root(): void {
+    return;
   }
 }

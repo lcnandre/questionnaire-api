@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { NestFactory } from '@nestjs/core';
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, ValidationPipe } from '@nestjs/common';
 import { json } from 'express';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
@@ -12,7 +12,12 @@ async function bootstrap() {
 
   // Middlewares
   app.use(json());
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginEmbedderPolicy: false,
+      contentSecurityPolicy: false,
+    }),
+  )
   app.use(cookieParser());
   app.enableCors({
     origin: true,
@@ -23,6 +28,7 @@ async function bootstrap() {
     optionsSuccessStatus: HttpStatus.NO_CONTENT,
   });
   app.enableShutdownHooks();
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000, '0.0.0.0');
 }
