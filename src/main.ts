@@ -3,16 +3,15 @@ import { NestFactory } from '@nestjs/core';
 import { HttpStatus } from '@nestjs/common';
 import { json, urlencoded } from 'express';
 import helmet from 'helmet';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 import { AppModule } from './application/modules/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
 
   // Middlewares
-  app.use(json({ limit: '50mb' }));
-  app.use(urlencoded({ limit: '50mb', extended: true }));
+  app.use(json());
   app.use(helmet());
   app.use(cookieParser());
   app.enableCors({
@@ -23,6 +22,7 @@ async function bootstrap() {
     exposedHeaders: '*',
     optionsSuccessStatus: HttpStatus.NO_CONTENT,
   });
+  app.enableShutdownHooks();
 
   await app.listen(3000, '0.0.0.0');
 }
