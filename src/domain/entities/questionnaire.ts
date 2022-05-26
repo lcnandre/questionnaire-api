@@ -1,4 +1,5 @@
 import { ArrayNotEmpty, IsArray, IsDefined, IsEmpty, IsOptional, ValidateNested } from 'class-validator';
+import shortid from 'shortid';
 
 import { Question } from './question';
 import { User } from './user';
@@ -20,4 +21,9 @@ export class Questionnaire {
   @ArrayNotEmpty()
   @ValidateNested()
   questions: Question[];
+
+  constructor(creator: User) {
+    this.creator = creator;
+    this.shareUrl = `${creator.id}/${shortid.generate()}`;
+  }
 }

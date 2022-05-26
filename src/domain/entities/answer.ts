@@ -11,4 +11,9 @@ export abstract class Answer {
 
   @IsDefined()
   question: Question;
+
+  constructor(user: User, question: Question) {
+    this.user = user;
+    this.question = question;
+  }
 }

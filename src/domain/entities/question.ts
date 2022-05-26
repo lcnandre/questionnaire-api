@@ -17,4 +17,9 @@ export abstract class Question {
 
   @IsOptional()
   answers?: Answer[] = [];
+
+  constructor(order: number, title: string) {
+    this.order = order;
+    this.title = title;
+  }
 }
