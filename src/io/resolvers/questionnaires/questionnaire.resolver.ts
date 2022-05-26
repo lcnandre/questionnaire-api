@@ -1,8 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
-import { QuestionnaireService } from '../../../../domain/services/questionnaire.service';
-import { QuestionnaireDto } from './questionnaire.dto';
+import { QuestionnaireService } from '../../../domain/services/questionnaire.service';
+import { QuestionnaireDto } from './dtos/questionnaire.dto';
 
 @Resolver(QuestionnaireDto)
 export class QuestionnaireResolver {
