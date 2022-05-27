@@ -6,10 +6,11 @@ import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 
 const config: MikroOrmModuleOptions = {
   type: 'postgresql',
-  host: 'ec2-54-165-184-219.compute-1.amazonaws.com',
-  user: 'lfynpxamyasleo',
-  password: '2b14a32f18cc2d4343805d2da0ef37755fe97b206f54e50035e212b708427b4b',
-  dbName: 'd6na20247k2ihv',
+  host: parseConnectionString(process.env.DATABASE_URL, 'host'),
+  port: +parseConnectionString(process.env.DATABASE_URL, 'port'),
+  user: parseConnectionString(process.env.DATABASE_URL, 'user'),
+  password: parseConnectionString(process.env.DATABASE_URL, 'password'),
+  dbName: parseConnectionString(process.env.DATABASE_URL, 'database'),
   driverOptions: {
     connection: { ssl: { rejectUnauthorized: false } },
   },
@@ -30,5 +31,11 @@ const config: MikroOrmModuleOptions = {
     glob: '!(*.spec).{js,ts}'
   }
 };
+
+function parseConnectionString(connectionStr: string, path: string): string {
+  const regex = new RegExp(/postgres\:\/\/(?<user>.+)\:(?<password>.+)\@(?<host>.+)\:(?<port>.+)\/(?<database>.+)/g);
+  const matches = regex.exec(connectionStr);
+  return matches.groups[path].trim();
+}
 
 export default config;

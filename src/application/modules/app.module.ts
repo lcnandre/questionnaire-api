@@ -6,10 +6,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import { QuestionnairesModule } from './questionnaires.module';
 import { AppController } from '../../io/controllers/app.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     QuestionnairesModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     MikroOrmModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
