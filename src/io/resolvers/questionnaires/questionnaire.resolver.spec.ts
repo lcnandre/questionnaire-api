@@ -9,7 +9,6 @@ import { Questionnaire } from '../../../domain/entities/questionnaire';
 import { ShortAnswerQuestion } from '../../../domain/entities/questions/short-answer-question';
 import { User } from '../../../domain/entities/user';
 import { GetQuestionnaireHandler } from '../../../domain/use-cases/questionnaire/get-questionnaire';
-import { QuestionnaireDto } from './dtos/questionnaire.dto';
 import { QuestionnaireResolver } from './questionnaire.resolver';
 import { NotFoundException } from '@nestjs/common';
 
