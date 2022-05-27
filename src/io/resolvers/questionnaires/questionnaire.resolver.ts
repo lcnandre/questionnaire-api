@@ -8,7 +8,7 @@ import { QuestionnaireDto } from './dtos/questionnaire.dto';
 export class QuestionnaireResolver {
   constructor(private readonly service: QuestionnaireService) { }
 
-  @Query(_ => QuestionnaireDto)
+  @Query(/* istanbul ignore next */_ => QuestionnaireDto)
   async questionnaire(@Args('shareUrl') shareUrl: string): Promise<QuestionnaireDto> {
     const questionnaire = await this.service.getQuestionnaire(shareUrl);
     if (!questionnaire) {

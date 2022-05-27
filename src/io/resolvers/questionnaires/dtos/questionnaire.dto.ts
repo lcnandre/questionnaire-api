@@ -3,7 +3,7 @@ import { Questionnaire } from '../../../../domain/entities/questionnaire';
 
 @ObjectType({ description: 'questionnaire' })
 export class QuestionnaireDto {
-  @Field(_ => ID)
+  @Field(/* istanbul ignore next */_ => ID)
   id: number;
 
   @Field()
