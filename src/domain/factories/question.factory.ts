@@ -6,7 +6,7 @@ export class QuestionFactory {
   static fromVo(vo: QuestionVo) {
     switch (vo.type) {
       case QuestionType.ShortAnswer:
-        return new ShortAnswerQuestion(vo.order, vo.title, vo.id);
+        return new ShortAnswerQuestion(vo.order, vo.title);
     }
   }
 }

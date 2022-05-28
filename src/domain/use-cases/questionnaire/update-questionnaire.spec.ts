@@ -62,7 +62,9 @@ describe('Update questionnaire (use case)', () => {
         return q
       })
       .map(q => QuestionVo.fromQuestion(q));
-    const result = await updateQuestionnaire(undefined, updatedQuestions);
+
+    const newQuestion = new QuestionVo(3, 'Third question', QuestionType.ShortAnswer);
+    const result = await updateQuestionnaire(undefined, [...updatedQuestions, newQuestion]);
     expect(result).toBeDefined();
     expect(result).toBeInstanceOf(Questionnaire);
     expect(result.questions).toBeDefined();

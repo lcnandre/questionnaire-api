@@ -16,7 +16,7 @@ export * from '../../../node_modules/@mikro-orm/core/entity/EntityLoader';
 export * from '../../../node_modules/@mikro-orm/core/entity/Reference';
 export * from '../../../node_modules/@mikro-orm/core/entity/BaseEntity';
 export * from '../../../node_modules/@mikro-orm/core/entity/WrappedEntity';
-export * from '../../../node_modules/@mikro-orm/core/entity/wrap';
+export * from './entity/wrap';
 export * from '../../../node_modules/@mikro-orm/core/events';
 export * from '../../../node_modules/@mikro-orm/core/EntityManager';
 export * from '../../../node_modules/@mikro-orm/core/unit-of-work';

@@ -1,8 +1,8 @@
-import { Collection, Entity, Enum, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, Enum, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { IsDefined, IsNotEmpty, IsOptional } from 'class-validator';
+
 import { QuestionType } from '../enums/question-type';
 import { Answer } from './answer';
-
 import { Questionnaire } from './questionnaire';
 
 @Entity({
@@ -31,11 +31,8 @@ export abstract class Question {
   @Enum(/* istanbul ignore next */ () => QuestionType)
   type!: QuestionType;
 
-  constructor(order: number, title: string, id?: number) {
+  constructor(order: number, title: string) {
     this.order = order;
     this.title = title;
-    if (id) {
-      this.id = id;
-    }
   }
 }

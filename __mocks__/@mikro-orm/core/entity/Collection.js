@@ -12,11 +12,24 @@ class Collection {
     return Array.from(this.items);
   };
 
-  set(items) {
-    this.items = new Set();
-    if (items) {
+  add(items) {
+    if (items && items.length) {
+      for (const item of items) {
+        this.items.add(item);
+      }
+
       let i = 0;
-      this.items = new Set(items);
+      this.items.forEach(item => this[i++] = item);
+    }
+  }
+
+  remove(items) {
+    if (items && items.length) {
+      for (const item of items) {
+        this.items.delete(item);
+      }
+  
+      let i = 0;
       this.items.forEach(item => this[i++] = item);
     }
   }
