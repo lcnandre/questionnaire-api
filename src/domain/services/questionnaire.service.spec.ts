@@ -10,6 +10,7 @@ import { User } from '../entities/user';
 import { QuestionType } from '../enums/question-type';
 import { CreateQuestionnaireHandler } from '../use-cases/questionnaire/create-questionnaire';
 import { GetQuestionnaireHandler } from '../use-cases/questionnaire/get-questionnaire';
+import { UpdateQuestionnaireHandler } from '../use-cases/questionnaire/update-questionnaire';
 import { QuestionVo } from '../vos/question.vo';
 import { QuestionnaireService } from './questionnaire.service';
 
@@ -33,6 +34,7 @@ describe('QuestionnaireService (service)', () =>  {
         },
         GetQuestionnaireHandler,
         CreateQuestionnaireHandler,
+        UpdateQuestionnaireHandler,
       ],
     }).compile();
     await module.init();
@@ -64,5 +66,12 @@ describe('QuestionnaireService (service)', () =>  {
     expect(result).toBeDefined();
     expect(result).toBeInstanceOf(Questionnaire);
     expect(result.id).toBeGreaterThan(0);
+  });
+
+  it ('Should update an existing questionnaire', async () => {
+    const result = await service.updateQuestionnaire(questionnaire.id, 'Teste questionnaire v2');
+    expect(result).toBeDefined();
+    expect(result).toBeInstanceOf(Questionnaire);
+    expect(result.title).toBe('Teste questionnaire v2');
   });
 });

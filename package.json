@@ -85,15 +85,15 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
+    "rootDir": ".",
+    "testRegex": "./src/.*.spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/!(auth|migrations|modules|seeders|decorators|guards|interceptors)/*.(t|j)s"
+      "src/**/!(auth|migrations|modules|seeders|decorators|guards|interceptors)/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   },
   "mikro-orm": {

@@ -48,7 +48,7 @@ describe('Create questionnaire (use case)', () => {
     await expect(createQuestionnaire('', undefined))
       .rejects
       .toThrow(BadRequestException);
-  })
+  });
 
   const createQuestionnaire = (title: string, questions: QuestionVo[]): Promise<Questionnaire> => {
     const command = new CreateQuestionnaireCommand(user, title, questions);

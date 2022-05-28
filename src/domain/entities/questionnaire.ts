@@ -25,7 +25,7 @@ export class Questionnaire {
 
   @CollectionNotEmpty()
   @ValidateNested()
-  @OneToMany(/* istanbul ignore next */ () => Question, /* istanbul ignore next */ question => question.questionnaire)
+  @OneToMany(/* istanbul ignore next */ () => Question, /* istanbul ignore next */ question => question.questionnaire, { orphanRemoval: true })
   questions = new Collection<Question>(this);
 
   constructor(creator: User, title: string, questions: Question[]) {

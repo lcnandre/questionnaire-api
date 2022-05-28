@@ -43,13 +43,19 @@ describe('Get questionnaire (use case)', () => {
     expect(result).toBeInstanceOf(Questionnaire);
   });
 
-  it ('Should return null if no questionnaire is found', async () => {
-    const result = await getQuestionnaire('');
-    expect(result).toBe(null);
-  })
+  it ('Should get the questionnaire given the id', async () => {
+    const result = await getQuestionnaire(undefined, questionnaire.id);
+    expect(result).toBeDefined();
+    expect(result).toBeInstanceOf(Questionnaire);
+  });
 
-  const getQuestionnaire = (shareUrl: string): Promise<Questionnaire> => {
-    const query = new GetQuestionnaireQuery(shareUrl);
+  it ('Should return null if no questionnaire is found', async () => {
+    const result = await getQuestionnaire(undefined, undefined);
+    expect(result).toBe(null);
+  });
+
+  const getQuestionnaire = (shareUrl?: string, id?: number): Promise<Questionnaire> => {
+    const query = new GetQuestionnaireQuery(shareUrl, id);
     const handler = new GetQuestionnaireHandler(repository);
     return handler.execute(query);
   }

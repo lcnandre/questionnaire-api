@@ -31,8 +31,11 @@ export abstract class Question {
   @Enum(/* istanbul ignore next */ () => QuestionType)
   type!: QuestionType;
 
-  constructor(order: number, title: string) {
+  constructor(order: number, title: string, id?: number) {
     this.order = order;
     this.title = title;
+    if (id) {
+      this.id = id;
+    }
   }
 }

@@ -12,9 +12,11 @@ import { User } from '../../../domain/entities/user';
 import { QuestionnaireResolver } from './questionnaire.resolver';
 import { AddQuestionnaireDto } from './dtos/add-questionaire.dto';
 import { AddQuestionDto } from './dtos/add-question.dto';
+import { UpdateQuestionnaireDto } from './dtos/update-questionnaire.dto';
 import { QuestionType } from '../../../domain/enums/question-type';
 import { GetQuestionnaireHandler } from '../../../domain/use-cases/questionnaire/get-questionnaire';
 import { CreateQuestionnaireHandler } from '../../../domain/use-cases/questionnaire/create-questionnaire';
+import { UpdateQuestionnaireHandler } from '../../../domain/use-cases/questionnaire/update-questionnaire';
 
 describe('QuestionnaireResolver (resolver)', () => {
   let resolver: QuestionnaireResolver;
@@ -37,6 +39,7 @@ describe('QuestionnaireResolver (resolver)', () => {
         QuestionnaireResolver,
         GetQuestionnaireHandler,
         CreateQuestionnaireHandler,
+        UpdateQuestionnaireHandler,
       ]
     }).compile();
     await module.init();
@@ -60,6 +63,12 @@ describe('QuestionnaireResolver (resolver)', () => {
     expect(result.title).toBe('Test questionnaire');
   });
 
+  it ('Should get the questionnaire given the id', async () => {
+    const result = await resolver.questionnaire(undefined, questionnaire.id);
+    expect(result).toBeDefined();
+    expect(result.title).toBe('Test questionnaire');
+  });
+
   it ('Should throw NotFoundException when questionnarie doesnt exists', async () => {
     await expect(resolver.questionnaire('aa'))
       .rejects
@@ -75,5 +84,15 @@ describe('QuestionnaireResolver (resolver)', () => {
     } as AddQuestionnaireDto);
     expect(result).toBeDefined();
     expect(result.id).toBeGreaterThan(0);
+  });
+
+  it ('Should update a questionnaire', async () => {
+    const result = await resolver.updateQuestionnaire({
+      id: questionnaire.id,
+      title: 'Test questionnaire v2',
+    } as UpdateQuestionnaireDto);
+    expect(result).toBeDefined();
+    expect(result.id).toBe(questionnaire.id);
+    expect(result.title).toBe('Test questionnaire v2');
   })
 });

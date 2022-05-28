@@ -11,6 +11,7 @@ import { QuestionnaireService } from '../../domain/services/questionnaire.servic
 import { QuestionnaireResolver } from '../../io/resolvers/questionnaires/questionnaire.resolver';
 import { GetQuestionnaireHandler } from '../../domain/use-cases/questionnaire/get-questionnaire';
 import { CreateQuestionnaireHandler } from '../../domain/use-cases/questionnaire/create-questionnaire';
+import { UpdateQuestionnaireHandler } from '../../domain/use-cases/questionnaire/update-questionnaire';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CreateQuestionnaireHandler } from '../../domain/use-cases/questionnaire
     QuestionnaireService,
     GetQuestionnaireHandler,
     CreateQuestionnaireHandler,
+    UpdateQuestionnaireHandler,
   ],
   exports: [CqrsModule],
 })

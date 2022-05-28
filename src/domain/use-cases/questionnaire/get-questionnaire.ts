@@ -5,7 +5,10 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Questionnaire } from '../../../domain/entities/questionnaire';
 
 export class GetQuestionnaireQuery {
-  constructor(public readonly shareUrl: string) { }
+  constructor(
+    public readonly shareUrl?: string,
+    public readonly id?: number,
+  ) { }
 }
 
 @QueryHandler(GetQuestionnaireQuery)
@@ -13,8 +16,6 @@ export class GetQuestionnaireHandler implements IQueryHandler<GetQuestionnaireQu
   constructor(@InjectRepository(Questionnaire) private readonly repository: EntityRepository<Questionnaire>) { }
 
   execute(query: GetQuestionnaireQuery): Promise<Questionnaire> {
-    const { shareUrl } = query;
-
-    return this.repository.findOne({ shareUrl }, { populate: ['questions'] });
+    return this.repository.findOne(query, { populate: ['questions'] });
   }
 }
