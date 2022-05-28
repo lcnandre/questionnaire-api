@@ -4,15 +4,15 @@ import { QuestionType } from '../../../../domain/enums/question-type';
 
 @InputType()
 export class UpdateQuestionDto {
-  @Field(/* istanbul ignore next */_ => Int)
-  id!: number;
+  @Field(/* istanbul ignore next */_ => Int, { nullable: true })
+  id: number;
 
-  @Field(/* istanbul ignore next */_ => Int)
-  order!: number;
+  @Field(/* istanbul ignore next */_ => Int, { nullable: true })
+  order: number;
 
-  @Field(/* istanbul ignore next */_ => QuestionType)
-  type!: QuestionType;
+  @Field(/* istanbul ignore next */_ => QuestionType, { nullable: true })
+  type: QuestionType;
 
-  @Field()
-  title!: string;
+  @Field({ nullable: true })
+  title: string;
 }

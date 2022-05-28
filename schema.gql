@@ -7,6 +7,11 @@ type QuestionDto {
   id: Int!
   order: Int!
   title: String!
+  type: QuestionType!
+}
+
+enum QuestionType {
+  ShortAnswer
 }
 
 """questionnaire"""
@@ -48,10 +53,6 @@ input AddQuestionDto {
   title: String!
 }
 
-enum QuestionType {
-  ShortAnswer
-}
-
 input UpdateQuestionnaireDto {
   id: Int!
   title: String
@@ -59,8 +60,8 @@ input UpdateQuestionnaireDto {
 }
 
 input UpdateQuestionDto {
-  id: Int!
-  order: Int!
-  type: QuestionType!
-  title: String!
+  id: Int
+  order: Int
+  type: QuestionType
+  title: String
 }
