@@ -3,24 +3,43 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ConfigModule } from '@nestjs/config';
 
 import { QuestionnairesModule } from './questionnaires.module';
 import { AppController } from '../../io/controllers/app.controller';
-import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user.module';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { GqlAuthGuard } from '../guards/gql-auth.guard';
+import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
+import { User } from '../../domain/entities/user';
 
 @Module({
   imports: [
+    UserModule,
     QuestionnairesModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MikroOrmModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      debug: true,
+      debug: process.env.NODE_ENV !== 'production',
       playground: false,
       autoSchemaFile: 'schema.gql',
       installSubscriptionHandlers: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    MikroOrmModule.forFeature({
+      entities: [User]
+    }),
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GqlAuthGuard
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CurrentUserInterceptor,
+    },
   ],
   controllers: [AppController],
 })

@@ -15,6 +15,6 @@ export class GetQuestionnaireHandler implements IQueryHandler<GetQuestionnaireQu
   execute(query: GetQuestionnaireQuery): Promise<Questionnaire> {
     const { shareUrl } = query;
 
-    return this.repository.findOne({ shareUrl });
+    return this.repository.findOne({ shareUrl }, { populate: ['questions'] });
   }
 }

@@ -1,6 +1,7 @@
-import { Entity, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { ArrayNotEmpty, IsArray, IsDefined, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { IsDefined, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
 import shortid from 'shortid';
+import { CollectionNotEmpty } from '../validators/collection-not-empty';
 
 import { Question } from './question';
 import { User } from './user';
@@ -22,17 +23,15 @@ export class Questionnaire {
   @Property()
   shareUrl?: string;
 
-  @IsDefined()
-  @IsArray()
-  @ArrayNotEmpty()
+  @CollectionNotEmpty()
   @ValidateNested()
   @OneToMany(/* istanbul ignore next */ () => Question, /* istanbul ignore next */ question => question.questionnaire)
-  questions: Question[];
+  questions = new Collection<Question>(this);
 
   constructor(creator: User, title: string, questions: Question[]) {
     this.creator = creator;
     this.title = title;
-    this.questions = questions;
+    this.questions = new Collection<Question>(this, questions);
     this.shareUrl = `${creator?.id}/${shortid.generate()}`;
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, Enum, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, Enum, ManyToOne, OneToMany, OneToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { IsDefined, IsNotEmpty, IsOptional } from 'class-validator';
 import { QuestionType } from '../enums/question-type';
 import { Answer } from './answer';
@@ -21,13 +21,12 @@ export abstract class Question {
   @Property()
   title: string;
 
-  @IsDefined()
   @ManyToOne()
   questionnaire: Questionnaire;
 
   @IsOptional()
   @OneToMany(/* istanbul ignore next */ () => Answer, /* istanbul ignore next */ answer => answer.question)
-  answers?: Answer[] = [];
+  answers = new Collection<Answer>(this);
 
   @Enum(/* istanbul ignore next */ () => QuestionType)
   type!: QuestionType;

@@ -10,6 +10,7 @@ import { ShortAnswerQuestion } from '../../domain/entities/questions/short-answe
 import { QuestionnaireService } from '../../domain/services/questionnaire.service';
 import { QuestionnaireResolver } from '../../io/resolvers/questionnaires/questionnaire.resolver';
 import { GetQuestionnaireHandler } from '../../domain/use-cases/questionnaire/get-questionnaire';
+import { CreateQuestionnaireHandler } from '../../domain/use-cases/questionnaire/create-questionnaire';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { GetQuestionnaireHandler } from '../../domain/use-cases/questionnaire/ge
     QuestionnaireResolver,
     QuestionnaireService,
     GetQuestionnaireHandler,
+    CreateQuestionnaireHandler,
   ],
   exports: [CqrsModule],
 })

@@ -7,17 +7,22 @@ import createMockRepository from '../../../test/repository.mock';
 import { Questionnaire } from '../entities/questionnaire';
 import { ShortAnswerQuestion } from '../entities/questions/short-answer-question';
 import { User } from '../entities/user';
+import { QuestionType } from '../enums/question-type';
+import { CreateQuestionnaireHandler } from '../use-cases/questionnaire/create-questionnaire';
 import { GetQuestionnaireHandler } from '../use-cases/questionnaire/get-questionnaire';
+import { QuestionVo } from '../vos/question.vo';
 import { QuestionnaireService } from './questionnaire.service';
 
 describe('QuestionnaireService (service)', () =>  {
   let service: QuestionnaireService;
   let questionnaire: Questionnaire;
+  let user: User;
   
   beforeAll(async () => {
     const module = await Test.createTestingModule({
       imports: [CqrsModule],
       providers: [
+        QuestionnaireService,
         {
           provide: getRepositoryToken(Questionnaire),
           useValue: createMockRepository<Questionnaire>()
@@ -26,15 +31,16 @@ describe('QuestionnaireService (service)', () =>  {
           provide: getRepositoryToken(User),
           useValue: createMockRepository<User>()
         },
-        QuestionnaireService,
         GetQuestionnaireHandler,
-      ]
+        CreateQuestionnaireHandler,
+      ],
     }).compile();
+    await module.init();
 
     service = module.get<QuestionnaireService>(QuestionnaireService);
 
     const userRepository = module.get<EntityRepository<User>>(getRepositoryToken(User));
-    const user = new User('test', 'test@test.com', '123');
+    user = new User('test', 'test@test.com', '123');
     await userRepository.persistAndFlush(user);
 
     const question = new ShortAnswerQuestion(1, 'First question');
@@ -42,14 +48,21 @@ describe('QuestionnaireService (service)', () =>  {
     const repository = module.get<EntityRepository<Questionnaire>>(getRepositoryToken(Questionnaire));
     questionnaire = new Questionnaire(user, 'Test questionnaire', [question]);
     await repository.persistAndFlush(questionnaire);
-
-    const app = module.createNestApplication();
-    await app.init();
   });
 
   it ('Should get the questionnaire given the shareUrl', async () => {
     const result = await service.getQuestionnaire(questionnaire.shareUrl);
     expect(result).toBeDefined();
     expect(result).toBeInstanceOf(Questionnaire);
+  });
+
+  it ('Should create a questionnaire given valid data', async () => {
+    const result = await service.createQuestionnaire(user, 'Test questionnaire', [
+      new QuestionVo(1, 'First question', QuestionType.ShortAnswer),
+      new QuestionVo(2, 'Second question', QuestionType.ShortAnswer),
+    ]);
+    expect(result).toBeDefined();
+    expect(result).toBeInstanceOf(Questionnaire);
+    expect(result.id).toBeGreaterThan(0);
   });
 });
