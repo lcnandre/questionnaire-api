@@ -23,12 +23,13 @@ type AuthDto {
 }
 
 type Query {
-  questionnaire(shareUrl: String!): QuestionnaireDto!
+  questionnaire(shareUrl: String!, id: Float!): QuestionnaireDto!
 }
 
 type Mutation {
   login(loginDto: LoginDto!): AuthDto!
   addQuestionnaire(addQuestionnaireDto: AddQuestionnaireDto!): QuestionnaireDto!
+  updateQuestionnaire(updateQuestionnaireDto: UpdateQuestionnaireDto!): QuestionnaireDto!
 }
 
 input LoginDto {
@@ -49,4 +50,17 @@ input AddQuestionDto {
 
 enum QuestionType {
   ShortAnswer
+}
+
+input UpdateQuestionnaireDto {
+  id: ID!
+  title: String!
+  questions: [UpdateQuestionDto!]!
+}
+
+input UpdateQuestionDto {
+  id: ID!
+  order: Int!
+  type: QuestionType!
+  title: String!
 }
