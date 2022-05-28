@@ -1,5 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { CurrentUser } from '../../../application/decorators/current-user.decorator';
 import { User } from '../../../domain/entities/user';
@@ -13,7 +13,10 @@ export class QuestionnaireResolver {
   constructor(private readonly service: QuestionnaireService) { }
 
   @Query(/* istanbul ignore next */_ => QuestionnaireDto)
-  async questionnaire(@Args('shareUrl') shareUrl?: string, @Args('id') id?: number): Promise<QuestionnaireDto> {
+  async questionnaire(
+    @Args('shareUrl', { nullable: true }) shareUrl?: string,
+    @Args('id', { nullable: true, type: /* istanbul ignore next */ () => Int }) id?: number): Promise<QuestionnaireDto>
+  {
     const questionnaire = await this.service.getQuestionnaire(shareUrl, id);
     if (!questionnaire) {
       throw new NotFoundException(shareUrl);

@@ -1,4 +1,4 @@
-import { EntityRepository } from '@mikro-orm/core';
+import { EntityRepository, FilterQuery } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
@@ -16,6 +16,12 @@ export class GetQuestionnaireHandler implements IQueryHandler<GetQuestionnaireQu
   constructor(@InjectRepository(Questionnaire) private readonly repository: EntityRepository<Questionnaire>) { }
 
   execute(query: GetQuestionnaireQuery): Promise<Questionnaire> {
-    return this.repository.findOne(query, { populate: ['questions'] });
+    const { shareUrl, id } = query;
+    const filter: FilterQuery<Questionnaire> = {};
+
+    if (shareUrl) filter.shareUrl = shareUrl;
+    if (id) filter.id = id;
+
+    return this.repository.findOne(filter, { populate: ['questions'] });
   }
 }

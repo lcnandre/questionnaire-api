@@ -4,14 +4,14 @@
 
 """question"""
 type QuestionDto {
-  id: ID!
+  id: Int!
   order: Int!
   title: String!
 }
 
 """questionnaire"""
 type QuestionnaireDto {
-  id: ID!
+  id: Int!
   title: String!
   shareUrl: String!
   questions: [QuestionDto!]!
@@ -23,7 +23,7 @@ type AuthDto {
 }
 
 type Query {
-  questionnaire(shareUrl: String!, id: Float!): QuestionnaireDto!
+  questionnaire(shareUrl: String, id: Int): QuestionnaireDto!
 }
 
 type Mutation {
@@ -53,13 +53,13 @@ enum QuestionType {
 }
 
 input UpdateQuestionnaireDto {
-  id: ID!
-  title: String!
-  questions: [UpdateQuestionDto!]!
+  id: Int!
+  title: String
+  questions: [UpdateQuestionDto!]
 }
 
 input UpdateQuestionDto {
-  id: ID!
+  id: Int!
   order: Int!
   type: QuestionType!
   title: String!

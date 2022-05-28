@@ -1,10 +1,10 @@
-import { Field, ID, InputType, Int } from '@nestjs/graphql';
+import { Field, Int, InputType } from '@nestjs/graphql';
 
 import { QuestionType } from '../../../../domain/enums/question-type';
 
 @InputType()
 export class UpdateQuestionDto {
-  @Field(/* istanbul ignore next */_ => ID)
+  @Field(/* istanbul ignore next */_ => Int)
   id!: number;
 
   @Field(/* istanbul ignore next */_ => Int)

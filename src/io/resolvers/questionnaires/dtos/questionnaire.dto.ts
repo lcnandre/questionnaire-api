@@ -1,11 +1,11 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 import { Questionnaire } from '../../../../domain/entities/questionnaire';
 import { QuestionDto } from './question.dto';
 
 @ObjectType({ description: 'questionnaire' })
 export class QuestionnaireDto {
-  @Field(/* istanbul ignore next */_ => ID)
+  @Field(/* istanbul ignore next */_ => Int)
   id: number;
 
   @Field()
