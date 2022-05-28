@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 import { Questionnaire } from '../entities/questionnaire';
@@ -29,6 +29,11 @@ export class QuestionnaireService {
 
   async updateQuestionnaire(id: number, title?: string, questions?: QuestionVo[]) {
     const questionnaire = await this.getQuestionnaire(undefined, id);
+
+    if (!questionnaire) {
+      throw new NotFoundException(`Questionnaire ${id} not found`);
+    }
+
     return this.commandBus.execute(
       new UpdateQuestionnaireCommand(questionnaire, title, questions)
     );

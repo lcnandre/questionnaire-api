@@ -1,5 +1,6 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { NotFoundException } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
@@ -73,5 +74,11 @@ describe('QuestionnaireService (service)', () =>  {
     expect(result).toBeDefined();
     expect(result).toBeInstanceOf(Questionnaire);
     expect(result.title).toBe('Teste questionnaire v2');
+  });
+
+  it ('Should throw NotFoundException when updating a nonexisting questionnaire', async () => {
+    await expect(service.updateQuestionnaire(-1, ''))
+      .rejects
+      .toThrow(NotFoundException);
   });
 });
