@@ -8,9 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { QuestionnairesModule } from './questionnaires.module';
 import { AppController } from '../../io/controllers/app.controller';
 import { UserModule } from './user.module';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core';
 import { GqlAuthGuard } from '../guards/gql-auth.guard';
-import { CurrentUserInterceptor } from '../interceptors/current-user.interceptor';
 import { User } from '../../domain/entities/user';
 
 @Module({
@@ -35,10 +34,6 @@ import { User } from '../../domain/entities/user';
     {
       provide: APP_GUARD,
       useClass: GqlAuthGuard
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CurrentUserInterceptor,
     },
   ],
   controllers: [AppController],

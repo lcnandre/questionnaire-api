@@ -1,6 +1,7 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseInterceptors } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 
+import { CurrentUserInterceptor } from '../../../application/interceptors/current-user.interceptor';
 import { CurrentUser } from '../../../application/decorators/current-user.decorator';
 import { User } from '../../../domain/entities/user';
 import { QuestionnaireService } from '../../../domain/services/questionnaire.service';
@@ -25,6 +26,7 @@ export class QuestionnaireResolver {
   }
 
   @Mutation(/* istanbul ignore next */_ => QuestionnaireDto)
+  @UseInterceptors(CurrentUserInterceptor)
   async addQuestionnaire(@CurrentUser() user: User, @Args('addQuestionnaireDto') dto: AddQuestionnaireDto) {
     const questionnaire = await this.service.createQuestionnaire(user, dto.title, dto.questions);
     return QuestionnaireDto.fromQuestionnaire(questionnaire);
