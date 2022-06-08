@@ -31,7 +31,9 @@ export class Questionnaire {
   constructor(creator: User, title: string, questions: Question[]) {
     this.creator = creator;
     this.title = title;
-    this.questions = new Collection<Question>(this, questions);
+    for (const q of questions) {
+      this.questions.add(q);
+    }
     this.shareUrl = `${creator?.id}/${shortid.generate()}`;
   }
 }
